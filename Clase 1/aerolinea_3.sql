@@ -1,5 +1,4 @@
-USE aerolinea 
-
+﻿
 --INSERTAR EN LA TABLA PILOTO 
 INSERT INTO piloto 
 VALUES     ('1111', 
@@ -28,7 +27,7 @@ VALUES     ('1D',
 
 INSERT INTO destino 
 VALUES     ('2D', 
-            'Panam�'); 
+            'Panamá'); 
 
 INSERT INTO destino 
 VALUES     ('3D', 
@@ -70,14 +69,14 @@ VALUES     (820,
 --INSERTAR EN LA TABLA PROGRAMACION 
 INSERT INTO programacion 
 VALUES     (520, 
-            '01/25/1999', 
+            '25/01/1999', 
             '5:50', 
             '6:30', 
             '2222'); 
 
 INSERT INTO programacion 
 VALUES     (520, 
-            '01/30/1999', 
+            '30/01/1999', 
             '12:36', 
             '16:23', 
             '3333'); 
@@ -102,15 +101,3 @@ VALUES     (705,
             '22:00', 
             '8:00', 
             '1111'); 
-
-SELECT * 
-FROM   piloto; 
-
-SELECT * 
-FROM   destino; 
-
-SELECT * 
-FROM   vuelo; 
-
-SELECT * 
-FROM   programacion; 
