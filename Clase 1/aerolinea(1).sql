@@ -19,10 +19,10 @@ CREATE TABLE vuelo
 CREATE TABLE programacion 
   ( 
      vuelo        NUMERIC(10) NOT NULL, 
-     fecha        DATETIME NOT NULL, 
+     fecha        timestamp without time zone NOT NULL, 
      hora_salida  VARCHAR(10) NOT NULL, 
      hora_llegada VARCHAR(10) NOT NULL, 
-     piloto       VARCHAR(20) NOT NULL, 
+     piloto       VARCHAR(20) NOT NULL
   ); 
 
 CREATE TABLE destino 
