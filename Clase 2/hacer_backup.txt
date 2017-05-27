@@ -1,0 +1,1 @@
+pg_dump.exe -h localhost -p 5432 -U postgres -f c:/banco.backup banco
