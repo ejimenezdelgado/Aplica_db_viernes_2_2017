@@ -1,0 +1,68 @@
+////////////////////FUNCTION/////////////////////
+	
+	CREATE OR REPLACE FUNCTION IngresoProducto(p_id INTEGER, p_unidades INTEGER)
+  RETURNS void AS
+  $$
+      BEGIN
+      --(Select sum(unidades+p_unidades)from producto)
+      UPDATE productos SET unidades = (SELECT  sum(unidades+p_unidades)FROM productos WHERE id = p_id) WHERE id = p_id; 
+      END;
+  $$
+  LANGUAGE 'plpgsql'
+	
+	
+
+////FACTURA//////////
+CREATE OR REPLACE FUNCTION generaFactura()  RETURNS TRIGGER AS 
+$$
+BEGIN
+INSERT INTO facturas(id, id_compraproducto, fecha, impuesto, precio) VALUES (1,1, '18-05-2018', 10, 500);
+RAISE NOTICE 'Factura Completa';
+RETURN NEW;
+END
+$$ language plpgsql;
+
+
+CREATE TRIGGER transaccionTrigger AFTER INSERT 
+    ON detallecompra FOR EACH ROW 
+    EXECUTE PROCEDURE generaFactura();
+	
+	
+	
+	
+	////////////AUDITORIA////////////////////
+	CREATE OR REPLACE FUNCTION insertar_auditoria() RETURNS TRIGGER AS $insertar$
+DECLARE BEGIN 
+INSERT INTO  auditoria (accion,fecha) VALUES ('Insertar',now());
+RETURN NULL;
+END;
+$insertar$ language plpgsql;
+
+CREATE TRIGGER insertar_auditoria AFTER INSERT 
+ON productos FOR EACH ROW
+EXECUTE PROCEDURE insertar_auditoria();
+
+
+
+CREATE OR REPLACE FUNCTION delete_auditoria() RETURNS TRIGGER AS  $Delete$
+DECLARE BEGIN 
+INSERT INTO  auditoria (accion,fecha) VALUES ('Delete',now());
+RETURN NULL;
+END;
+$Delete$ language plpgsql;
+
+CREATE TRIGGER delete_auditoria AFTER DELETE 
+ON productos FOR EACH ROW
+EXECUTE PROCEDURE delete_auditoria();
+
+
+CREATE OR REPLACE FUNCTION  update_auditoria() RETURNS TRIGGER AS $update$
+DECLARE BEGIN
+INSERT INTO  auditoria (accion,fecha) VALUES ('Update',now());
+RETURN NULL;
+END;
+$update$ language plpgsql;
+
+CREATE TRIGGER update_auditoria AFTER UPDATE
+ON productos FOR EACH ROW
+EXECUTE PROCEDURE update_auditoria();
